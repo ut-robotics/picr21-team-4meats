@@ -1,3 +1,3 @@
-# picr21-team-4meats
-4 Meats
-push test
+# Project in competitive robotics 21-22 team 4meats
+
+This is the code repository for the team 4meats.
