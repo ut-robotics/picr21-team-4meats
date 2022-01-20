@@ -161,7 +161,7 @@ while True:
     cv2.putText(frame, str(fps), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
     cv2.imshow('Processed', opening)
-    cv2.imshow('Original', bgr)
+    cv2.imshow('Original', frame)
 
     if cv2.waitKey(50) & 0xFF == ord('q'):
         break
