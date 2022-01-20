@@ -4,6 +4,7 @@ import cv2
 import numpy
 import time
 import functools
+from motionControl import move_robot_XY
 
 n = True
 clk1 = 0.0
@@ -111,6 +112,21 @@ while True:
     output = cv2.drawKeypoints(output, keypoints, numpy.array([]), (0, 0, 255),
                                cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+    if len(keypoints) == 0:
+        move_robot_XY(0, 0, -10, 0)
+
+    else:
+
+        for elem in keypoints:
+            cv2.putText(output, str(round(elem.pt[0])) + " " + str(round(elem.pt[1])),
+                        (round(elem.pt[0]), round(elem.pt[1])), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+            if elem.pt[0] > 550:
+                move_robot_XY(0, 0, -10, 0)
+            elif elem.pt[0] < 450:
+                move_robot_XY(0, 0, 10, 0)
+            else:
+                move_robot_XY(0, 0, 0, 0)
+
     cv2.putText(input, str(fps), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     cv2.imshow('Unprocessed', input)
     cv2.imshow('Processed', output)
@@ -122,3 +138,4 @@ print('closing program')
 pipeline.stop()
 cv2.destroyAllWindows()
 saveTrackbarValues(trackbars)
+move_robot_XY(0, 0, 0, 0)
