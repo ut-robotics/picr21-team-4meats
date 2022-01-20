@@ -41,11 +41,10 @@ def getTrackbarValues(path="./trackbar_defaults.txt"):
     trackbarValues = [15, 14, 58, 89, 163, 164, 3, 0]
     if os.path.isfile(path):
         try:
-            file = open(path)
-            trackbarValues = []
-            for line in file:
-                trackbarValues.append(int(line.strip()))
-            file.close()
+            with open(path) as file:
+                trackbarValues = []
+                for line in file:
+                    trackbarValues.append(int(line.strip()))
         except:
             pass
 
@@ -53,10 +52,9 @@ def getTrackbarValues(path="./trackbar_defaults.txt"):
 
 
 def saveTrackbarValues(values, path="./trackbar_defaults.txt"):
-    file = open(path, "w+")
-    for value in values:
-        file.write(str(value) + '\n')
-    file.close()
+    with open(path, "w+") as file:
+        for value in values:
+            file.write(str(value) + '\n')
 
 
 def updateTrackbar(index, value):
