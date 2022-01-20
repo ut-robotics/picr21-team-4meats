@@ -15,7 +15,7 @@ blobparams.filterByArea = True
 blobparams.minArea = 100
 blobparams.maxArea = 20000
 blobparams.filterByCircularity = False
-blobparams.minDistBetweenBlobs = 200
+blobparams.minDistBetweenBlobs = 100
 blobparams.filterByInertia = False
 blobparams.filterByConvexity = False
 
@@ -38,7 +38,7 @@ device.set_option(pyrealsense2.option.white_balance, 100.0)
 
 
 def getTrackbarValues(path="./trackbar_defaults.txt"):
-    trackbarValues = [125, 125, 125, 255, 255, 255, 5, 75]
+    trackbarValues = [15, 14, 58, 89, 163, 164, 3, 0]
     if os.path.isfile(path):
         try:
             file = open(path)
@@ -48,6 +48,7 @@ def getTrackbarValues(path="./trackbar_defaults.txt"):
             file.close()
         except:
             pass
+
     return trackbarValues
 
 
@@ -107,7 +108,8 @@ while True:
     blur = cv2.GaussianBlur(hsv, (x, x), trackbars[7])
 
     thresholded = cv2.bitwise_not(cv2.inRange(blur, lowerLimits, upperLimits))
-    output = cv2.morphologyEx(thresholded, cv2.MORPH_OPEN, kernel)
+
+    output = cv2.morphologyEx(thresholded, cv2.MORPH_CLOSE, kernel)
     keypoints = detector.detect(output)
     output = cv2.drawKeypoints(output, keypoints, numpy.array([]), (0, 0, 255),
                                cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
