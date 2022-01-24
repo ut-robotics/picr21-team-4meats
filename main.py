@@ -1,16 +1,23 @@
-# This is a sample Python script.
+from camera import *
+from manualControl import *
+from automaticControl import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+initialize_camera()
+controlState = False
+prevControlState = False
 
+while True:
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    controlState = control_state_manual(prevControlState)
+    if controlState:
+        manual_movement()
+    prevControlState = controlState
 
+    if not controlState:
+        # center_ball(find_best_ball(get_keypoints()))
+        follow_ball(find_best_ball(get_keypoints()))
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    if cv2.waitKey(50) & 0xFF == ord('q'):
+        break
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+quit_camera()

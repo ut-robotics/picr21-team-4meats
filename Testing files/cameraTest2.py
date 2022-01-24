@@ -6,7 +6,7 @@ import os
 cv2.namedWindow("Original", cv2.WINDOW_NORMAL)
 cap = cv2.VideoCapture(4)
 
-if not os.path.isfile("./trackbar_defaults.txt"):
+if not os.path.isfile("../trackbar_defaults.txt"):
 
     trackbar_value1 = 125
     trackbar_value2 = 125
@@ -19,7 +19,7 @@ if not os.path.isfile("./trackbar_defaults.txt"):
 
 else:
     try:
-        file = open("trackbar_defaults.txt")
+        file = open("../trackbar_defaults.txt")
         trackbar_value1 = int(file.readline().strip())
         trackbar_value2 = int(file.readline().strip())
         trackbar_value3 = int(file.readline().strip())
@@ -170,7 +170,7 @@ print('closing program')
 cap.release()
 cv2.destroyAllWindows()
 
-file = open("trackbar_defaults.txt", "w+")
+file = open("../trackbar_defaults.txt", "w+")
 file.write(str(trackbar_value1) + "\n" + str(trackbar_value2) + "\n" + str(trackbar_value3) + "\n" + str(
     trackbar_value4) + "\n" + str(trackbar_value5) + "\n" + str(trackbar_value6) + "\n" + str(
     trackbar_value7) + "\n" + str(trackbar_value8))
