@@ -4,7 +4,7 @@ from motionControl import *
 def center_ball(point):
     print(point)
     if point is not None:
-        maxSpeedR = 60
+        maxSpeedR = 30
         ballErrorR = point[0] - 424
         normalizedBallErrorR = ballErrorR / 848
         rotationSpeed = normalizedBallErrorR * maxSpeedR

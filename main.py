@@ -15,12 +15,12 @@ class State(Enum):
 
 
 def handleManual():
+    camera.get_keypoints()
     manual_movement()
 
 
 def handleFind():
     center_ball(camera.find_best_ball(camera.get_keypoints()))
-    print("camera")
 
 
 def handleDrive():
@@ -33,7 +33,7 @@ switcher = {
     State.DRIVE: handleDrive
 }
 
-manualControlEnabled = False
+manualControlEnabled = True
 state = State.MANUAL
 
 while True:
@@ -41,10 +41,8 @@ while True:
     manualControlEnabled = control_state_manual(manualControlEnabled)
     if manualControlEnabled:
         state = State.MANUAL
-        print("manual")
     else:
         state = state.FIND
-        print("find")
 
     switcher.get(state)()
 

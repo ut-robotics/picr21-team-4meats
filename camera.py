@@ -15,7 +15,6 @@ class Camera():
 
         self.oldSelectedPoint = [0, 0, 0]
         self.selectedPoint = [0, 0, 0]
-        self.lostCounter = 0
 
         blobparams = cv2.SimpleBlobDetector_Params()
         blobparams.filterByArea = True
@@ -146,24 +145,17 @@ class Camera():
 
     def find_best_ball(self, keypoints):
         if len(keypoints) == 0:
-            move_robot_XY(0, 0, 10, 0)
+            move_robot_XY(0, 0, 5, 0)
 
         if len(keypoints) != 0:
             keypoints = sorted(keypoints, key=lambda x: x[2])
             for point in keypoints:
                 if point[2] != 0:
-                    if abs(point[0] - self.oldSelectedPoint[0]) < 50 and abs(
-                            point[1] - self.oldSelectedPoint[1]) < 50 and \
-                            self.oldSelectedPoint[0] != 0 and self.oldSelectedPoint[1] != 0:
-                        self.selectedPoint = point
-                        break
-                    elif (self.oldSelectedPoint[0] == 0 and self.oldSelectedPoint[1] == 0) or self.lostCounter >= 5:
-                        self.lostCounter = 0
-                        self.selectedPoint = point
-                        break
-                    else:
-                        self.lostCounter += 1
+                    self.selectedPoint = point
+                    break
 
-            print(self.lostCounter)
+            print(self.selectedPoint)
+            print(self.oldSelectedPoint)
+            print(keypoints)
             self.oldSelectedPoint = self.selectedPoint
             return self.selectedPoint
