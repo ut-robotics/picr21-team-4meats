@@ -1,6 +1,10 @@
 from motionControl import *
 
 
+def find_ball():
+    move_robot_XY(0, 0, 5, 0)
+
+
 def center_ball(point):
     print(point)
     if point is not None:

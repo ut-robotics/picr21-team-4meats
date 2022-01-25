@@ -1,6 +1,6 @@
-from camera import *
 from manualControl import *
 from automaticControl import *
+from camera import *
 from enum import Enum
 
 camera = Camera()
@@ -9,9 +9,8 @@ camera = Camera()
 class State(Enum):
     MANUAL = 0
     FIND = 1
-    DRIVE = 2
-    AIM = 3
-    THROW = 4
+    CENTER = 2
+    DRIVE = 3
 
 
 def handleManual():
@@ -20,6 +19,15 @@ def handleManual():
 
 
 def handleFind():
+    if camera.find_best_ball(camera.get_keypoints()) is not None:
+        state = State.DRIVE
+        switcher.get(state)()
+    else:
+        print("finding")
+        find_ball()
+
+
+def handleCenter():
     center_ball(camera.find_best_ball(camera.get_keypoints()))
 
 
@@ -30,11 +38,11 @@ def handleDrive():
 switcher = {
     State.MANUAL: handleManual,
     State.FIND: handleFind,
+    State.CENTER: handleCenter,
     State.DRIVE: handleDrive
 }
 
 manualControlEnabled = True
-state = State.MANUAL
 
 while True:
 
@@ -42,9 +50,11 @@ while True:
     if manualControlEnabled:
         state = State.MANUAL
     else:
-        state = state.DRIVE
+        state = State.FIND
 
     switcher.get(state)()
+
+    print(state)
 
     if cv2.waitKey(50) & 0xFF == ord('q'):
         break

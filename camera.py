@@ -4,7 +4,6 @@ import cv2
 import numpy
 import time
 import functools
-from motionControl import move_robot_XY
 
 
 class Camera():
@@ -144,8 +143,6 @@ class Camera():
         self.trackbars[index] = value
 
     def find_best_ball(self, keypoints):
-        if len(keypoints) == 0:
-            move_robot_XY(0, 0, 5, 0)
 
         if len(keypoints) != 0:
             keypoints = sorted(keypoints, key=lambda x: x[2])
