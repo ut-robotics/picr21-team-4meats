@@ -42,7 +42,7 @@ while True:
     if manualControlEnabled:
         state = State.MANUAL
     else:
-        state = state.FIND
+        state = state.DRIVE
 
     switcher.get(state)()
 
